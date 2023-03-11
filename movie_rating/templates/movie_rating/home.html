@@ -1,15 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}
-{{ title }}
-{% endblock %}
-
+{% block title %}Movies{% endblock %}
 
 {% block content %}
+<h1 class="text-center mb-3">
+    Movies:
+</h1>
 
-<div class="container">
-    HOME PAGE
+{% if movies %}
+{% for movie in movies %}
+<div class="card mb-3">
+    <div class="card-body">
+        <p class="lead">
+            {{ movie.title }} ({{ movie.year }})
+            <span class="badge rounded-pill bg-warning text-dark">{{ movie.average_rating|floatformat:1 }}</span>
+            <br><span class="badge rounded-pill bg-secondary">Votes: {{ movie.count_votes }}</span>
+        </p>
+    </div>
 </div>
+{% empty %}
+There are no movies.
+{% endfor %}
+{% else %}
+<p>No movies</p>
+{% endif %}
 
 {% endblock %}
