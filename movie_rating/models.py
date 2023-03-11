@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg, Count
 from accounts.models import User
 from django.utils.text import slugify
 
@@ -17,6 +18,17 @@ class Movie(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+    @property
+    def average_rating(self):
+        return self.rating.filter(is_active=True).aggregate(Avg('rating'))['rating__avg']
+
+    @property
+    def count_votes(self):
+        return self.rating.filter(is_active=True).aggregate(Count('rating'))['rating__count']
+
+    class Meta:
+        ordering = ['title']
 
 
 class Rating(models.Model):
@@ -40,3 +52,6 @@ class Rating(models.Model):
 
     def __str__(self):
         return f'Movie: {self.movie} is rated {self.rating}'
+
+    class Meta:
+        unique_together = ('movie', 'user',)
