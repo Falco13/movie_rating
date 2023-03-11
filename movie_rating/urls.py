@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
+from movie_rating.views import HomePage
 
 urlpatterns = [
-    path('', name="home"),
+    path('', HomePage.as_view(), name="home"),
 ]
