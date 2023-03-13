@@ -10,12 +10,14 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegisterForm(UserCreationForm):
-    username = forms.CharField(label='username', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    password1 = forms.CharField(label='password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    password2 = forms.CharField(label='repeat password',
-                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    date_of_birth = forms.DateField(label='date of birthday', widget=forms.DateInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'your username'}))
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'your password'}))
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'repeat password'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'your email'}))
+    date_of_birth = forms.DateField(
+        widget=forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'your date of birth'}))
 
     class Meta:
         model = User
