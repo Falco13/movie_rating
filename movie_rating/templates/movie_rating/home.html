@@ -8,20 +8,30 @@
     Movies:
 </h1>
 
+
 {% if movies %}
-{% for movie in movies %}
-<div class="card mb-3">
-    <div class="card-body">
-        <p class="lead">
-            {{ movie.title }} ({{ movie.year }})
-            <span class="badge rounded-pill bg-warning text-dark">{{ movie.average_rating|floatformat:1 }}</span>
-            <br><span class="badge rounded-pill bg-secondary">Votes: {{ movie.count_votes }}</span>
-        </p>
-    </div>
-</div>
-{% empty %}
-There are no movies.
-{% endfor %}
+<table class="table">
+
+    <thead>
+    <tr>
+        <th scope="col">Film</th>
+        <th scope="col">Year</th>
+        <th scope="col">Rating</th>
+        <th scope="col">Votes</th>
+    </tr>
+    </thead>
+    <tr>
+        {% for movie in movies %}
+        <td>{{ movie.title }}</td>
+        <td>{{ movie.year }}</td>
+        <td><span class="badge rounded-pill bg-warning text-dark">{{ movie.average_rating|floatformat:1 }}</span></td>
+        <td>{{ movie.count_votes }}</td>
+    </tr>
+
+    {% endfor %}
+</table>
+
+
 {% else %}
 <p>No movies</p>
 {% endif %}
