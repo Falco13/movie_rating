@@ -29,8 +29,8 @@
     </tbody>
 </table>
 
-<a href="#}" class="btn btn-primary btn-sm">Edit Profile</a>
-<a href="#" class="btn btn-danger btn-sm">Delete Profile</a>
+<a href="#" class="btn btn-primary btn-sm">Edit Profile</a>
+<a href="{% url 'accounts:delete_user' pk=user.id %}" class="btn btn-danger btn-sm">Delete Profile</a>
 <a href="#" class="btn btn-secondary btn-sm">Password change</a>
 
 {% endblock %}
