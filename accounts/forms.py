@@ -24,6 +24,10 @@ class UserRegisterForm(UserCreationForm):
         fields = ('username', 'email', 'password1', 'password2', 'date_of_birth')
 
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
 class EditUserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -33,5 +37,5 @@ class EditUserForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.TextInput(attrs={'class': 'form-control'}),
-            'date_of_birth': forms.SelectDateWidget(attrs={'class': 'form-control'}),
+            'date_of_birth': DateInput(),
         }
