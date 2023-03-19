@@ -10,7 +10,8 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-success btn-block">Save Changes</button>
+        <button type="submit" class="btn btn-danger btn-block">Save Changes</button>
+        <a class="btn btn-success" href="{% url 'accounts:profile' %}" type="submit">Cancel</a>
     </form>
 </div>
 {% endblock %}

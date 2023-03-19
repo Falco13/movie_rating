@@ -1,9 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 
-from accounts.forms import UserRegisterForm, UserLoginForm, EditUserForm
+from accounts.forms import UserRegisterForm, UserLoginForm, EditUserForm, PasswordChangingForm
 from accounts.models import User
 
 
@@ -69,3 +73,10 @@ def edit_user(request, pk):
     else:
         form = EditUserForm(instance=user)
     return render(request, 'accounts/edit_user.html', {'user': user, 'form': form})
+
+
+class UserPasswordChangeView(SuccessMessageMixin, LoginRequiredMixin, PasswordChangeView):
+    template_name = 'accounts/password_change.html'
+    form_class = PasswordChangingForm
+    success_url = reverse_lazy('accounts:profile')
+    success_message = 'Your password has been changed successfully'
