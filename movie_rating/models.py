@@ -1,5 +1,7 @@
 from django.db import models
 from django.db.models import Avg, Count
+from django.urls import reverse
+
 from accounts.models import User
 from django.utils.text import slugify
 
@@ -18,6 +20,9 @@ class Movie(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('detail', kwargs={'slug': self.slug})
 
     @property
     def average_rating(self):

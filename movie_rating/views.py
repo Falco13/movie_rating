@@ -1,4 +1,5 @@
-from django.views.generic import ListView, TemplateView
+from django.shortcuts import get_object_or_404, render
+from django.views.generic import ListView, TemplateView, DetailView
 from movie_rating.models import Movie
 
 
@@ -14,6 +15,11 @@ class HomePage(ListView):
 
     def get_queryset(self):
         return Movie.objects.filter(is_active=True)
+
+
+def detail_movie(request, slug):
+    movie = get_object_or_404(Movie, slug=slug)
+    return render(request, 'movie_rating/detail.html', context={'movie': movie})
 
 
 class AboutView(TemplateView):

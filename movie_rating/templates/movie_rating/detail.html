@@ -1,15 +1,9 @@
 {% extends 'base.html' %}
-{% load static %}
 
-{% block title %}Movies{% endblock %}
+{% block title %}Detail Movie{% endblock %}
 
 {% block content %}
-<h1 class="text-center mb-3">
-    Movies:
-</h1>
-
-
-{% if movies %}
+<h1 class="text-center mb-3">{{ movie.title }}</h1>
 <table class="table">
 
     <thead>
@@ -18,24 +12,14 @@
         <th scope="col">Year</th>
         <th scope="col">Rating</th>
         <th scope="col">Votes</th>
-        <th scope="col">Vote</th>
     </tr>
     </thead>
     <tr>
-        {% for movie in movies %}
         <td>{{ movie.title }}</td>
         <td>{{ movie.year }}</td>
         <td><span class="badge rounded-pill bg-warning text-dark">{{ movie.average_rating|floatformat:1 }}</span></td>
         <td>{{ movie.count_votes }}</td>
-        <td><a href="{{ movie.get_absolute_url }}" class="btn btn-danger">Rate...</a></td>
     </tr>
 
-    {% endfor %}
-</table>
 
-
-{% else %}
-<p>No movies</p>
-{% endif %}
-
-{% endblock %}
+    {% endblock %}
