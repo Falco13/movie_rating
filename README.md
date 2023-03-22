@@ -1,8 +1,10 @@
 # movie_rating
 # simple django movie rating app
 
-- The Home page displays the list of films, the rating of the film and the number of voters..
+- The Home page displays the list of films, the rating of the film and the number of voters...
+- Homepage has pagination.
 - Implemented the ability to register and authenticate users. When user login the site, the user can choose to enter a username or his email address.
+- Each user has his own Profile, where he can see all his data, change his password, and also delete his account.
 
 
 __Used tools:__    
