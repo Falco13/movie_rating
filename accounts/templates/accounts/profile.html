@@ -6,7 +6,7 @@
 {% block content %}
 
 <h1>Profile:</h1>
-<div class="alert alert-primary" role="alert">Your profile: <b>{{ user.username }}</b></div>
+<div class="alert alert-info" role="alert">Your profile: <b>{{ user.username }}</b></div>
 
 <table class="table">
     <thead>
@@ -15,6 +15,7 @@
         <th scope="col">Last name</th>
         <th scope="col">email</th>
         <th scope="col">Date of Birth</th>
+        <th scope="col">Age</th>
         <th scope="col">Date of registration</th>
         <th scope="col">Last login</th>
     </tr>
@@ -25,6 +26,7 @@
         <td>{{ user.last_name }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.date_of_birth }}</td>
+        <td>{{ user.age }}</td>
         <td>{{ user.date_joined }}</td>
         <td>{{ user.last_login }}</td>
     </tr>
