@@ -67,7 +67,7 @@ def edit_user(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, 'User data has been changed')
-            return redirect('home')
+            return redirect('accounts:profile')
         else:
             messages.error(request, form.errors)
     else:
