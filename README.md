@@ -5,6 +5,7 @@
 - Homepage has pagination.
 - Implemented the ability to register and authenticate users. When user login the site, the user can choose to enter a username or his email address.
 - Each user has his own Profile, where he can see all his data, change his password, and also delete his account.
+- In the Profile, you can also see the user's age if he indicated the date of birth in his Profile.
 
 
 __Used tools:__    
