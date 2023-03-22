@@ -10,6 +10,7 @@
     <tr>
         <th scope="col">Film</th>
         <th scope="col">Year</th>
+        <th scope="col">Description</th>
         <th scope="col">Rating</th>
         <th scope="col">Votes</th>
     </tr>
@@ -17,9 +18,22 @@
     <tr>
         <td>{{ movie.title }}</td>
         <td>{{ movie.year }}</td>
-        <td><span class="badge rounded-pill bg-warning text-dark">{{ movie.average_rating|floatformat:1 }}</span></td>
+        <td>{{ movie.description }}</td>
+        <td><h4><span class="badge rounded-pill bg-warning text-dark">{{ movie.average_rating|floatformat:1 }}</span>
+        </h4></td>
         <td>{{ movie.count_votes }}</td>
     </tr>
+</table>
 
-
-    {% endblock %}
+<div class="alert alert-warning" role="alert">
+    <form method="POST">
+        {% for f in form.rating %}
+        <div class="form-check form-check-inline">
+            {% csrf_token %}
+            {{ f }}
+        </div>
+        {% endfor %}
+        <button class=" btn btn-danger" type="submit">Rate</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,6 +1,10 @@
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import ListView, TemplateView, DetailView
-from movie_rating.models import Movie
+from django.urls import reverse
+from django.views.generic import ListView, TemplateView
+from movie_rating.models import Movie, Rating
+from movie_rating.forms import RatingForm
 
 
 class HomePage(ListView):
@@ -20,7 +24,19 @@ class HomePage(ListView):
 
 def detail_movie(request, slug):
     movie = get_object_or_404(Movie, slug=slug)
-    return render(request, 'movie_rating/detail.html', context={'movie': movie})
+    if request.method == 'POST':
+        form = RatingForm(request.POST)
+        if form.is_valid():
+            rating = request.POST.get('rating')
+            if Rating.objects.filter(user=request.user, movie=movie).exists():
+                messages.error(request, 'You have already rated this movie!')
+            else:
+                Rating.objects.create(user=request.user, rating=rating, movie=movie)
+                messages.success(request, 'Thank you for your review of the movie!')
+            return HttpResponseRedirect(reverse('detail', args=(slug,)))
+    else:
+        form = RatingForm()
+        return render(request, 'movie_rating/detail.html', context={'movie': movie, 'form': form})
 
 
 class AboutView(TemplateView):

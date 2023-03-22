@@ -25,7 +25,8 @@
         {% for movie in movies %}
         <td>{{ movie.title }}</td>
         <td>{{ movie.year }}</td>
-        <td><span class="badge rounded-pill bg-warning text-dark">{{ movie.average_rating|floatformat:1 }}</span></td>
+        <td><h4><span class="badge rounded-pill bg-warning text-dark">{{ movie.average_rating|floatformat:1 }}</span>
+        </h4></td>
         <td>{{ movie.count_votes }}</td>
         <td><a href="{{ movie.get_absolute_url }}" class="btn btn-danger">Rate...</a></td>
     </tr>
