@@ -1,6 +1,8 @@
 # movie_rating
 # simple django movie rating app
 
+The movie model is simplified and does not contain a poster, genre, actor or director. The purpose of the application is to show the functionality of the rating and calculation of ratings.
+
 - The Home page displays the list of films, the rating of the film and the number of voters...
 - Homepage has pagination.
 - Implemented the ability to register and authenticate users. When user login the site, the user can choose to enter a username or his email address.
