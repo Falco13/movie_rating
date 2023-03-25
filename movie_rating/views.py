@@ -38,7 +38,10 @@ def detail_movie(request, slug):
             return HttpResponseRedirect(reverse('detail', args=(slug,)))
     else:
         form = RatingForm()
-        return render(request, 'movie_rating/detail.html', context={'movie': movie, 'form': form})
+        user_rating = Rating.objects.filter(user=request.user, movie=movie).first()
+        return render(request, 'movie_rating/detail.html', context={'movie': movie,
+                                                                    'form': form,
+                                                                    'user_rate': user_rating})
 
 
 class AboutView(TemplateView):

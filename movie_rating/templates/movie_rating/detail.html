@@ -3,7 +3,7 @@
 {% block title %}Detail Movie{% endblock %}
 
 {% block content %}
-<h1 class="text-center mb-3">{{ movie.title }}</h1>
+<h1 class="text-center mb-3" xmlns="http://www.w3.org/1999/html">{{ movie.title }}</h1>
 <table class="table">
 
     <thead>
@@ -24,6 +24,14 @@
         <td>{{ movie.count_votes }}</td>
     </tr>
 </table>
+
+{% if user_rate.rating %}
+<div class="alert alert-success" role="alert">You have already rated this movie.
+    Your rate: <span class="badge rounded-pill bg-warning text-dark">{{ user_rate.rating }}</span>
+</div>
+{% else %}
+<div class="alert alert-danger" role="alert">You haven't rated this movie yet.</div>
+{% endif %}
 
 <div class="alert alert-warning" role="alert">
     <form method="POST">

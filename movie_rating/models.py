@@ -51,7 +51,7 @@ class Rating(models.Model):
     )
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='rating')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name='Rating creation date')
     rating = models.PositiveSmallIntegerField(choices=RATE_CHOICES, null=True)
     is_active = models.BooleanField(default=True)
 
