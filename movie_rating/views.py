@@ -28,11 +28,9 @@ def detail_movie(request, slug):
         form = RatingForm(request.POST)
         if form.is_valid():
             rating = request.POST.get('rating')
-            if Rating.objects.filter(user=request.user, movie=movie).exists():
-                messages.error(request, 'You have already rated this movie!')
-            else:
-                Rating.objects.create(user=request.user, rating=rating, movie=movie)
-                messages.success(request, 'Thank you for your review of the movie!')
+            Rating.objects.filter(user=request.user, movie=movie).delete()
+            Rating.objects.create(user=request.user, rating=rating, movie=movie)
+            messages.success(request, 'Thank you for your review of the movie!')
             return HttpResponseRedirect(reverse('detail', args=(slug,)))
     else:
         form = RatingForm()
