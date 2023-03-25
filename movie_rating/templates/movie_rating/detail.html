@@ -26,11 +26,11 @@
 </table>
 
 {% if user_rate.rating %}
-<div class="alert alert-success" role="alert">You have already rated this movie.
-    Your rate: <span class="badge rounded-pill bg-warning text-dark">{{ user_rate.rating }}</span>
-</div>
-{% else %}
-<div class="alert alert-danger" role="alert">You haven't rated this movie yet.</div>
+    {% if request.user.is_authenticated %}
+    <div class="alert alert-success" role="alert">You have already rated this movie.
+        Your rate: <span class="badge rounded-pill bg-warning text-dark">{{ user_rate.rating }}</span>
+    </div>
+    {% endif %}
 {% endif %}
 
 <div class="alert alert-warning" role="alert">
@@ -41,7 +41,12 @@
             {{ f }}
         </div>
         {% endfor %}
-        <button class=" btn btn-danger" type="submit">Rate</button>
+
+        {% if request.user.is_authenticated %}
+        <button class="btn btn-outline-danger" type="submit">Rate</button>
+        {% else %}
+        <button class="btn btn-danger" disabled>Rate</button>
+        {% endif %}
     </form>
 </div>
 {% endblock %}
