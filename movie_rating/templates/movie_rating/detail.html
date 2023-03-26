@@ -35,10 +35,10 @@
 
 <div class="alert alert-warning" role="alert">
     <form method="POST">
-        {% for f in form.rating %}
+        {% for rate in form.rating %}
         <div class="form-check form-check-inline">
             {% csrf_token %}
-            {{ f }}
+            {{ rate }}
         </div>
         {% endfor %}
 
