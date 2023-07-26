@@ -25,12 +25,19 @@
     </tr>
 </table>
 
+<h1>Details of all ratings</h1>
+<ul>
+    {% for rating_count in ratings_counts %}
+    <li>Rate {{ rating_count.rating }}: - ({{ rating_count.count }})</li>
+    {% endfor %}
+</ul>
+
 {% if user_rate.rating %}
-    {% if request.user.is_authenticated %}
-    <div class="alert alert-success" role="alert">You have already rated this movie.
-        Your rate: <span class="badge rounded-pill bg-warning text-dark">{{ user_rate.rating }}</span>
-    </div>
-    {% endif %}
+{% if request.user.is_authenticated %}
+<div class="alert alert-success" role="alert">You have already rated this movie.
+    Your rate: <span class="badge rounded-pill bg-warning text-dark">{{ user_rate.rating }}</span>
+</div>
+{% endif %}
 {% endif %}
 
 <div class="alert alert-warning" role="alert">

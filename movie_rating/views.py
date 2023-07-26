@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -24,6 +25,8 @@ class HomePage(ListView):
 
 def detail_movie(request, slug):
     movie = get_object_or_404(Movie, slug=slug)
+    ratings_counts = Rating.objects.filter(movie=movie, is_active=True).values('rating').annotate(
+        count=Count('rating')).order_by('rating')
     if request.method == 'POST':
         form = RatingForm(request.POST)
         if form.is_valid():
@@ -41,7 +44,8 @@ def detail_movie(request, slug):
         user_rating = None
         if request.user.is_authenticated:
             user_rating = Rating.objects.filter(user=request.user, movie=movie).first()
-        return render(request, 'movie_rating/detail.html', context={'movie': movie,
+        return render(request, 'movie_rating/detail.html', context={'ratings_counts': ratings_counts,
+                                                                    'movie': movie,
                                                                     'form': form,
                                                                     'user_rate': user_rating})
 
