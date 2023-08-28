@@ -27,6 +27,16 @@ def detail_movie(request, slug):
     movie = get_object_or_404(Movie, slug=slug)
     ratings_counts = Rating.objects.filter(movie=movie, is_active=True).values('rating').annotate(
         count=Count('rating')).order_by('rating')
+
+    ### Создаем словарь для хранения результатов подсчета оценок
+    ratings_summary = {i: 0 for i in range(1, 11)}
+
+    ### Заполняем словарь значениями из запроса
+    for rating_count in ratings_counts:
+        rating = rating_count['rating']
+        count = rating_count['count']
+        ratings_summary[rating] = count
+
     if request.method == 'POST':
         form = RatingForm(request.POST)
         if form.is_valid():
@@ -48,7 +58,8 @@ def detail_movie(request, slug):
                       context={'ratings_counts': ratings_counts,
                                'movie': movie,
                                'form': form,
-                               'user_rate': user_rating})
+                               'user_rate': user_rating,
+                               'ratings_summary': ratings_summary})
 
 
 class AboutView(TemplateView):

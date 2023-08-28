@@ -25,10 +25,10 @@
     </tr>
 </table>
 
-<h1>Details of all ratings</h1>
+<h1>Details of all ratings:</h1>
 <ul>
-    {% for rating_count in ratings_counts %}
-    <li>Rate {{ rating_count.rating }}: - ({{ rating_count.count }})</li>
+    {% for rating, count in ratings_summary.items %}
+        <li>Rate <span class="badge rounded-pill bg-warning text-dark">{{ rating }}</span>: - {{ count }} Votes</li>
     {% endfor %}
 </ul>
 
