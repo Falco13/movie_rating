@@ -44,10 +44,11 @@ def detail_movie(request, slug):
         user_rating = None
         if request.user.is_authenticated:
             user_rating = Rating.objects.filter(user=request.user, movie=movie).first()
-        return render(request, 'movie_rating/detail.html', context={'ratings_counts': ratings_counts,
-                                                                    'movie': movie,
-                                                                    'form': form,
-                                                                    'user_rate': user_rating})
+        return render(request, 'movie_rating/detail.html',
+                      context={'ratings_counts': ratings_counts,
+                               'movie': movie,
+                               'form': form,
+                               'user_rate': user_rating})
 
 
 class AboutView(TemplateView):
