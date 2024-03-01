@@ -26,12 +26,10 @@
 </table>
 
 <h1>Details of all ratings:</h1>
-<ul>
     {% for rating, count in ratings_summary.items %}
-        <li>Rate <span class="badge rounded-pill bg-warning text-dark">{{ rating }}</span>: - {{ count }} Votes</li>
+        Rate <span class="badge rounded-pill bg-warning text-dark">{{ rating }}</span>: - {{ count }} Votes<br>
     {% endfor %}
-</ul>
-
+<br>
 {% if user_rate.rating %}
 {% if request.user.is_authenticated %}
 <div class="alert alert-success" role="alert">You have already rated this movie.
