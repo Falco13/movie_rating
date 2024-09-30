@@ -1,5 +1,5 @@
 # movie_rating
-# simple django movie rating app
+# django movie rating app
 
 The movie model is simplified and does not contain a poster, genre, actor or director. The purpose of the application is to show the functionality of the rating and calculation of ratings.
 
