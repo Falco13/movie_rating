@@ -60,3 +60,13 @@ class Rating(models.Model):
 
     class Meta:
         unique_together = ('movie', 'user',)
+
+    @property
+    def percentage_vote(self):
+        total_votes = Rating.objects.filter(movie=self.movie).count()
+        rating_count = Rating.objects.filter(movie=self.movie, rating=self.rating).count()
+        if total_votes == 0:
+            return 0
+        else:
+            vote_in_percentage = (rating_count / total_votes) * 100
+        return vote_in_percentage

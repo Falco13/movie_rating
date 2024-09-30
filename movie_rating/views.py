@@ -28,14 +28,15 @@ def detail_movie(request, slug):
     ratings_counts = Rating.objects.filter(movie=movie, is_active=True).values('rating').annotate(
         count=Count('rating')).order_by('rating')
 
-    ### Создаем словарь для хранения результатов подсчета оценок
-    ratings_summary = {i: 0 for i in range(1, 11)}
+    ratings_summary = {i: {'count': 0, 'percentage_vote': 0} for i in range(1, 11)}
 
-    ### Заполняем словарь значениями из запроса
+    total_votes = sum(item['count'] for item in ratings_counts)
+
     for rating_count in ratings_counts:
         rating = rating_count['rating']
         count = rating_count['count']
-        ratings_summary[rating] = count
+        ratings_summary[rating]['count'] = count
+        ratings_summary[rating]['percentage_vote'] = (count / total_votes * 100) if total_votes > 0 else 0
 
     if request.method == 'POST':
         form = RatingForm(request.POST)
@@ -52,14 +53,16 @@ def detail_movie(request, slug):
     else:
         form = RatingForm()
         user_rating = None
-        if request.user.is_authenticated:
-            user_rating = Rating.objects.filter(user=request.user, movie=movie).first()
+        user_rated = Rating.objects.filter(user=request.user, movie=movie).values_list('rating',
+                                                                                       flat=True) if request.user.is_authenticated else []
+
         return render(request, 'movie_rating/detail.html',
                       context={'ratings_counts': ratings_counts,
                                'movie': movie,
                                'form': form,
                                'user_rate': user_rating,
-                               'ratings_summary': ratings_summary})
+                               'ratings_summary': ratings_summary,
+                               'user_rated': user_rated})
 
 
 class AboutView(TemplateView):

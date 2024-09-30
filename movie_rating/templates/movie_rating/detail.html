@@ -25,11 +25,32 @@
     </tr>
 </table>
 
-<h1>Details of all ratings:</h1>
-    {% for rating, count in ratings_summary.items %}
-        Rate <span class="badge rounded-pill bg-warning text-dark">{{ rating }}</span>: - {{ count }} Votes<br>
-    {% endfor %}
-<br>
+<div class="container my-4">
+    <h2 class="text-center">Details of all ratings: <strong>{{ movie.title }}</strong></h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% for rating, data in ratings_summary.items %}
+                <div class="d-flex align-items-center mb-2">
+                    <span class="badge rounded-pill bg-warning text-dark me-2">{{ rating }}</span>
+                    <div class="progress flex-grow-1 me-2">
+                        <div class="progress-bar {% if rating in user_rated %}bg-danger{% else %}bg-secondary{% endif %}"
+                             role="progressbar"
+                             aria-label="Rating {{ rating }}"
+                             style="width: {{ data.percentage_vote|floatformat:1 }}%;"
+                             aria-valuenow="{{ data.percentage_vote|floatformat:1 }}"
+                             aria-valuemin="0"
+                             aria-valuemax="100">
+                            {{ data.percentage_vote|floatformat:1 }}%
+                        </div>
+                    </div>
+                    <span class="badge bg-danger">{{ data.count }} vote{{ data.count|pluralize }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
 {% if user_rate.rating %}
 {% if request.user.is_authenticated %}
 <div class="alert alert-success" role="alert">You have already rated this movie.
