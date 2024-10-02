@@ -53,8 +53,10 @@ def detail_movie(request, slug):
     else:
         form = RatingForm()
         user_rating = None
-        user_rated = Rating.objects.filter(user=request.user, movie=movie).values_list('rating',
-                                                                                       flat=True) if request.user.is_authenticated else []
+        if request.user.is_authenticated:
+            user_rated = Rating.objects.filter(user=request.user, movie=movie).values_list('rating', flat=True)
+        else:
+            user_rated = []
 
         return render(request, 'movie_rating/detail.html',
                       context={'ratings_counts': ratings_counts,
