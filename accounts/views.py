@@ -4,11 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Avg, Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-
 from accounts.forms import UserRegisterForm, UserLoginForm, EditUserForm, PasswordChangingForm
 from accounts.models import User
+from movie_rating.models import Rating, Movie
 
 
 def register(request):
@@ -46,7 +47,20 @@ def user_logout(request):
 
 @login_required
 def profile(request):
-    return render(request, 'accounts/profile.html')
+    user_ratings = Rating.objects.filter(user=request.user)
+    ratings_data = []
+    for rating in user_ratings:
+        movie = rating.movie
+        average_rating = Rating.objects.filter(movie=movie, is_active=True).aggregate(Avg('rating'))['rating__avg']
+        total_votes = Rating.objects.filter(movie=movie, is_active=True).aggregate(Count('rating'))['rating__count']
+
+        ratings_data.append({
+            'movie': movie,
+            'rating': rating.rating,
+            'average_rating': average_rating or 0,
+            'total_votes': total_votes or 0,
+        })
+    return render(request, 'accounts/profile.html', {'ratings_data': ratings_data})
 
 
 @login_required

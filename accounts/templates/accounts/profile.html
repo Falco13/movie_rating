@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<h1>Profile:</h1>
+<h1 class="text-center">Profile:</h1>
 <div class="alert alert-info" role="alert">Your profile: <b>{{ user.username }}</b></div>
 
 <table class="table">
@@ -36,5 +36,41 @@
 <a href="{% url 'accounts:edit_user' pk=user.id %}" class="btn btn-primary btn-sm">Edit Profile</a>
 <a href="{% url 'accounts:delete_user' pk=user.id %}" class="btn btn-danger btn-sm">Delete Profile</a>
 <a href="{% url 'accounts:password_change' %}" class="btn btn-secondary btn-sm">Password change</a>
+
+<br>
+<h1 class="text-center">Your Ratings:</h1>
+
+{% if ratings_data %}
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Film</th>
+        <th scope="col">Year</th>
+        <th scope="col">Rating</th>
+        <th scope="col">Total voted</th>
+        <th scope="col">Your Vote</th>
+        <th scope="col">Rate Again</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for rating_data in ratings_data %}
+    <tr>
+        <td>{{ rating_data.movie.title }}</td>
+        <td>{{ rating_data.movie.year }}</td>
+        <td>
+            <h4><span class="badge rounded-pill bg-warning text-dark">
+                {{ rating_data.average_rating|floatformat:1 }}
+              </span></h4>
+        </td>
+        <td>{{ rating_data.total_votes }}</td>
+        <td>{{ rating_data.rating }}</td>
+        <td><a href="{{ rating_data.movie.get_absolute_url }}" class="btn btn-outline-danger">Rate...</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>You haven't rated any movies yet.</p>
+{% endif %}
 
 {% endblock %}
