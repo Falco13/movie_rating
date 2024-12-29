@@ -47,7 +47,7 @@ def user_logout(request):
 
 @login_required
 def profile(request):
-    user_ratings = Rating.objects.filter(user=request.user)
+    user_ratings = Rating.objects.filter(user=request.user).order_by('-created_date')
     ratings_data = []
     for rating in user_ratings:
         movie = rating.movie
