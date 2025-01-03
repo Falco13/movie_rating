@@ -63,7 +63,11 @@
               </span></h4>
         </td>
         <td>{{ rating_data.total_votes }}</td>
-        <td>{{ rating_data.rating }}</td>
+        <td>
+            <h4><span class="badge rounded-pill bg-info text-dark">
+                {{ rating_data.rating }}
+            </span></h4>
+        </td>
         <td><a href="{{ rating_data.movie.get_absolute_url }}" class="btn btn-outline-danger">Rate...</a></td>
     </tr>
     {% endfor %}
