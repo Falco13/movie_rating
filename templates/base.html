@@ -34,14 +34,27 @@
 </nav>
 
 {% if messages %}
-{% for message in messages %}
-<div class="container">
-    <div class="alert alert-success" role="alert">
-        {{ message.tag }}
-        {{ message|safe }}
-    </div>
-</div>
-{% endfor %}
+    {% for message in messages %}
+        <div class="container">
+            {% if message.level == 40 %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message|safe }}
+                </div>
+            {% elif message.level == 25 %}
+                <div class="alert alert-warning" role="alert">
+                    {{ message|safe }}
+                </div>
+            {% elif message.level == 20 %}
+                <div class="alert alert-info" role="alert">
+                    {{ message|safe }}
+                </div>
+            {% elif message.level == 10 %}
+                <div class="alert alert-success" role="alert">
+                    {{ message|safe }}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
 {% endif %}
 
 <div class="container">
