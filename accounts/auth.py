@@ -11,4 +11,4 @@ class EmailOrUsernameModelBackend(backends.ModelBackend):
             if user.check_password(password):
                 return user
         except user_model.DoesNotExist:
-            user_model.set_password(password)
+            return None

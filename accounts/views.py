@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from accounts.forms import UserRegisterForm, UserLoginForm, EditUserForm, PasswordChangingForm
 from accounts.models import User
-from movie_rating.models import Rating, Movie
+from movie_rating.models import Rating
 
 
 def register(request):
@@ -34,6 +34,8 @@ def user_login(request):
             user = form.get_user()
             login(request, user)
             return redirect('home')
+        else:
+            messages.error(request, 'Wrong password or user name!')
     else:
         form = UserLoginForm()
     return render(request, 'accounts/login.html', {'form': form})
