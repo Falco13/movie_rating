@@ -62,7 +62,9 @@
                 {{ rating_data.average_rating|floatformat:1 }}
               </span></h4>
         </td>
-        <td>{{ rating_data.total_votes }}</td>
+        <td>
+            <p class="text-black-50">{{ rating_data.total_votes }}</p>
+        </td>
         <td>
             <h4><span class="badge rounded-pill bg-info text-dark">
                 {{ rating_data.rating }}
